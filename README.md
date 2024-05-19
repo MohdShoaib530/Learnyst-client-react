@@ -1,8 +1,8 @@
-# Firebase-React-Learning Management System (LMS)
+# Learnyst-Client
 
 ## Overview
 
-Welcome to our Learning Management System (LMS) repository! This project aims to provide a comprehensive platform for educators and learners to engage in online education effectively. Leveraging the power of React, Firebase, and AI, our LMS offers a range of features to facilitate course creation, enrollment, content management, communication, assessment, and AI-powered chatbots.
+Welcome to Learnyst-Client our Learning Management System (LMS) repository! This project aims to provide a comprehensive platform for educators and learners to engage in online education effectively. Leveraging the power of React, and AI, our LMS offers a range of features to facilitate course creation, enrollment, content management, communication, assessment, and AI-powered chatbots.
 
 ## Features
 
@@ -18,17 +18,15 @@ Welcome to our Learning Management System (LMS) repository! This project aims to
 ## Technologies Used
 
 - **React**: A popular JavaScript library for building dynamic user interfaces.
-- **Firebase**: A comprehensive platform for backend services, real-time data storage, and hosting.
 - **AI/ML**: Machine learning techniques for personalized recommendations, chatbots, and auto-grading.
 
 ## Installation
 
 To run the LMS locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/MohdShoaib530/firebase-react-lms.git`
-2. Install dependencies: `cd firebse-react-lms && npm install`
-3. Set up Firebase project and configure Firebase credentials.
-4. Run the app locally: `npm run dev`
+1. Clone the repository: `git clone https://github.com/MohdShoaib530/Learnyst-client.git`
+2. Install dependencies: `cd Learnyst-client && npm install`
+3. Run the app locally: `npm run dev`
 
 ## Contributing
 
@@ -37,4 +35,3 @@ Contributions to our LMS project are welcome! If you have ideas for improvements
 ## License
 
 This project is licensed under the [GNU Affero General Public License](LICENSE), Version 3, 19 November 2007.
-

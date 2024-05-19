@@ -5,7 +5,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
+    'plugin:react-hooks/recommended'
   ],
   overrides: [
     {
@@ -29,7 +29,7 @@ module.exports = {
     semi: ['error', 'always'],
     'no-unused-vars': ['warn'],
     'no-console': ['warn'],
-    eqeqeq: ['error', 'always'],
+    // eqeqeq: ['error', 'always'],
     curly: ['error', 'all'],
     'brace-style': ['error', '1tbs'],
     'no-trailing-spaces': ['error'],
@@ -42,7 +42,8 @@ module.exports = {
     'react/jsx-no-target-blank': 'off',
     'react-refresh/only-export-components': [
       'warn',
-      { allowConstantExport: true },
+      { allowConstantExport: true }
     ],
-  },
-}
+    'react/prop-types': ['off']
+  }
+};

@@ -6,7 +6,7 @@ import HomeLayout from './layouts/HomeLayout';
 
 function App() {
   return (
-    <HomeLayout>
+    <HomeLayout className='flex flex-col items-center justify-center w-full'>
       <Outlet />
     </HomeLayout>
   );

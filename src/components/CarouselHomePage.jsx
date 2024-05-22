@@ -104,7 +104,7 @@ function CarouselHomePage() {
           </Button>
         </div>
         <MobileStepper
-          sx={{ color: 'gray', backgroundColor: ' rgb(31 41 55)' }}
+          // sx={{ color: 'gray', backgroundColor: ' rgb(31 41 55)' }}
           className='h-3 absolute  bottom-0 w-full '
           steps={maxSteps}
           position='static'

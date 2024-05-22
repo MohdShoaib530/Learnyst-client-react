@@ -6,7 +6,7 @@ import Header from '../components/Header/Header';
 
 function HomeLayout({ children }) {
   return (
-    <div className='w-full relative flex flex-col items-center justify-center bg-gray-800 text-gray-300'>
+    <div className='w-full relative flex flex-col items-center justify-center '>
       <Header />
       {children}
       <Footer />

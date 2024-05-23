@@ -1,7 +1,10 @@
-function OurServicesCard({ image, title, data }) {
+function OurServicesCard({ image, title, data, className }) {
+  console.log('classname', className);
   return (
-    <div className='card w-full bg-base-100 text-gray-300 shadow-xl gap-y-3'>
-      <figure className='px-10 pt-5 h-20'>
+    <div
+      className={`card w-full bg-base-100 text-gray-300 shadow-xl gap-y-3 ${className}`}
+    >
+      <figure className={`px-10 pt-5 h-20 ${className}`}>
         <img src={image} alt={title} className='rounded-xl h-16' />
       </figure>
       <div className='card-body items-center text-center'>

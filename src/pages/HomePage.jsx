@@ -1,101 +1,30 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import upsc from '../assets/Courses/002e5e6e-47f1-4b21-89e0-8218ffcce066.webp';
-import neet from '../assets/Courses/doctor-explain-coronavirus.svg';
-import govtExam from '../assets/Courses/icons8-government.svg';
-import defence from '../assets/Courses/icons8-knight-shield.svg';
-import iit from '../assets/Courses/icons8-physics-188.png';
-import railway from '../assets/Courses/icons8-railway-200.png';
-import banking from '../assets/Courses/online-payment.svg';
-import school from '../assets/Courses/school-bag (1).png';
-import offlineCenters from '../assets/Icons/65d1e4cb-abf8-4bda-9f2c-49f37a714b7a.webp';
-import liveImage from '../assets/Icons/165756ec-8d87-4a09-9a88-95c342adddea.webp';
-import DoubtImage from '../assets/Icons/b75e0c1a-6893-4b31-8d79-f37a1c72115a.webp';
-import testImage from '../assets/Icons/ee478abe-a66b-4529-a264-16b61ffb6c51.webp';
 import Cards from '../components/Cards';
 import CarouselHomePage from '../components/CarouselHomePage';
+import OfflineCentres from '../components/OfflineCentres.jsx';
 import OurServicesCard from '../components/OurServicesCard';
-
-const cardData = [
-  {
-    image: liveImage,
-    title: 'Live Classes',
-    data: 'Interactive classes'
-  },
-  {
-    image: offlineCenters,
-    title: 'Offline Centers',
-    data: 'Centers near you'
-  },
-  {
-    image: testImage,
-    title: 'Online Tests',
-    data: 'Test series'
-  },
-  {
-    image: DoubtImage,
-    title: 'Doubt Resolution',
-    data: '24x7 support'
-  }
-];
-
-const examCategories = [
-  {
-    image: iit,
-    title: 'JEE Main',
-    data: 'Joint Entrance Examination'
-  },
-  {
-    image: neet,
-    title: 'NEET',
-    data: 'National Eligibility cum Entrance Test'
-  },
-  {
-    image: school,
-    title: 'School Exams',
-    data: 'CBSE, ICSE, State Boards'
-  },
-  {
-    image: upsc,
-    title: 'UPSC',
-    data: 'Union Public Service Commission'
-  },
-  {
-    image: govtExam,
-    title: 'SSC',
-    data: 'Staff Selection Commission'
-  },
-  {
-    image: banking,
-    title: 'Banking',
-    data: 'Banking Exams'
-  },
-  {
-    image: railway,
-    title: 'Railway',
-    data: 'Railway Exams'
-  },
-  {
-    image: defence,
-    title: 'Defence',
-    data: 'Defence Exams'
-  },
-  {
-    image: govtExam,
-    title: 'State PSC',
-    data: 'State Public Service Commission'
-  }
-];
+import examCategoriesData from '../constants/examCategoriesData.js';
+import offlineCentersData from '../constants/offlineCentersData.js';
+import ourServicesData from '../constants/ourServicesData.js';
+import { ourExcellnceData } from '../constants/ourServicesData.js';
 
 function HomePage() {
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCountExams, setvisibleCountExams] = useState(6);
+  const [visibleCountCentre, setvisibleCountCentre] = useState(8);
 
-  const handleShowMore = () => {
-    setVisibleCount(examCategories.length);
+  const handleShowMoreExams = () => {
+    setvisibleCountExams(examCategoriesData.length);
   };
-  const handleShowLess = () => {
-    setVisibleCount(6);
+  const handleShowLessExams = () => {
+    setvisibleCountExams(6);
+  };
+  const handleShowMoreCentre = () => {
+    setvisibleCountCentre(offlineCentersData.length);
+  };
+  const handleShowLessCentre = () => {
+    setvisibleCountCentre(8);
   };
   return (
     <div className='homepage relative mt-12 mb-10 md:mt-16 w-full flex flex-col items-center justify-center gap-y-3'>
@@ -125,7 +54,7 @@ function HomePage() {
       </div>
       <div className='OurServices flex flex-col items-center justify-center gap-5 mt-10 mx-3'>
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-y-5 gap-5'>
-          {cardData.map((card, index) => (
+          {ourServicesData.map((card, index) => (
             <OurServicesCard
               key={index}
               image={card.image}
@@ -148,35 +77,110 @@ function HomePage() {
         </div>
         <div className='flex flex-col items-center justify-center'>
           <div className='grid grid-cols-2 lg:grid-cols-3 gap-10 w-full px-2 items-center justify-center'>
-            {examCategories.slice(0, visibleCount).map((exam, index) => (
-              <Cards
-                key={index}
-                image={exam.image}
-                title={exam.title}
-                data={exam.data}
-                button1={'View Courses'}
-                button2={'Explore Category'}
-              />
-            ))}
+            {examCategoriesData
+              .slice(0, visibleCountExams)
+              .map((exam, index) => (
+                <Cards
+                  key={index}
+                  image={exam.image}
+                  title={exam.title}
+                  data={exam.data}
+                  button1={'View Courses'}
+                  button2={'Explore Category'}
+                />
+              ))}
           </div>
           <div className='flex items-center justify-center'>
-            {visibleCount < examCategories.length && (
+            {visibleCountExams < examCategoriesData.length && (
               <button
-                onClick={handleShowMore}
+                onClick={handleShowMoreExams}
                 className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
               >
                 Show More
               </button>
             )}
-            {visibleCount >= examCategories.length && (
+            {visibleCountExams >= examCategoriesData.length && (
               <button
-                onClick={handleShowLess}
+                onClick={handleShowLessExams}
                 className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
               >
                 Show Less
               </button>
             )}
           </div>
+        </div>
+      </div>
+      <div className='paathshaala centers shadow-black shadow-2xl bg-gray-800 text-gray-300 w-[95vw] rounded-3xl flex flex-col items-center justify-center gap-y-3 mt-10 p-3'>
+        <div className='bg-gray-100 text-gray-950 mt-2 rounded-2xl py-1 px-6 font-semibold '>
+          <h1 className='text-xl md:text-2xl'>
+            Explore <span className='text-blue-700'>Tech-Enabled</span> Offline
+            Paathshaala Centres
+          </h1>
+          <p className='md:text-xl'>
+            Creating new <span className='text-blue-700'>benchmarks</span> in
+            learning experiences
+          </p>
+        </div>
+        <div className='w-full items-center justify-center flex flex-col gap-y-3'>
+          <div className='bg-gray-100 text-gray-950 rounded-2xl py-1 px-6 font-semibold'>
+            <h1>Find Paathshaala Centre in your city</h1>
+            <p>
+              Available in <span className='text-blue-700'>12</span> cities
+            </p>
+          </div>
+          <div className='grid grid-cols-2 lg:grid-cols-4 mx-auto gap-4 w-full px-2 items-center justify-center'>
+            {offlineCentersData
+              .slice(0, visibleCountCentre)
+              .map((centre, index) => (
+                <OfflineCentres
+                  key={index}
+                  image={centre.image}
+                  data={centre.city}
+                />
+              ))}
+          </div>
+          <div className='flex items-center justify-center'>
+            {visibleCountCentre < offlineCentersData.length && (
+              <button
+                onClick={handleShowMoreCentre}
+                className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
+              >
+                Show More
+              </button>
+            )}
+            {visibleCountCentre >= offlineCentersData.length && (
+              <button
+                onClick={handleShowLessCentre}
+                className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
+              >
+                Show Less
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className='Our-Excellence flex flex-col items-center justify-center gap-5 mt-10 mx-3'>
+        <div>
+          <h1 className='text-xl md:text-2xl'>
+            A Platform Trusted by Students Worldwide
+          </h1>
+          <p className='md:text-xl'>
+            Don&apos;t Just Take Our Word for It. Delve into the Numbers and
+            Witness the Excellence for Yourself!
+          </p>
+        </div>
+        <div className='grid grid-cols-2 lg:grid-cols-4 gap-y-5 gap-5 '>
+          {ourExcellnceData.map((card, index) => (
+            <OurServicesCard
+              className={
+                'transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105'
+              }
+              key={index}
+              image={card.image}
+              title={card.title}
+              data={card.data}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 function OurServicesCard({ image, title, data, className }) {
-  console.log('classname', className);
   return (
     <div
       className={`card w-full bg-base-100 text-gray-300 shadow-xl gap-y-3 ${className}`}

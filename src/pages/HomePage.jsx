@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Cards from '../components/Cards';
@@ -9,8 +10,11 @@ import examCategoriesData from '../constants/examCategoriesData.js';
 import offlineCentersData from '../constants/offlineCentersData.js';
 import ourServicesData from '../constants/ourServicesData.js';
 import { ourExcellnceData } from '../constants/ourServicesData.js';
+import { getUserById, refreshAccessToken } from '../redux/slices/authSlice.js';
 
 function HomePage() {
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state?.auth);
   const [visibleCountExams, setvisibleCountExams] = useState(6);
   const [visibleCountCentre, setvisibleCountCentre] = useState(8);
 
@@ -26,6 +30,7 @@ function HomePage() {
   const handleShowLessCentre = () => {
     setvisibleCountCentre(8);
   };
+
   return (
     <div className='homepage relative mt-12 mb-10 md:mt-16 w-full flex flex-col items-center justify-center gap-y-3'>
       <div className='main-landing-page relative w-full flex flex-col items-center justify-center gap-y-3'>
@@ -46,9 +51,21 @@ function HomePage() {
                 AI driven education at Affordible price. {'  '}
               </span>
             </h1>
-            <button className='mt-4 px-8 py-3 bg-blue-500 text-white rounded hover:bg-blue-700 transition'>
-              <Link to={'/register'}>Get Started</Link>
-            </button>
+            {isLoggedIn ? (
+              <Link
+                to='/courses'
+                className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
+              >
+                Explore Courses
+              </Link>
+            ) : (
+              <Link
+                to='/signup'
+                className='px-8 py-4 bg-blue-500 text-white rounded hover:bg-blue-700 transition'
+              >
+                Sign Up Now
+              </Link>
+            )}
           </div>
         </div>
       </div>

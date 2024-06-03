@@ -1,4 +1,3 @@
-import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
@@ -15,8 +14,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { logoutUser, refreshAccessToken } from '../../redux/slices/authSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,37 +62,43 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Header() {
-  const { authStatus, role, data } = useSelector((state) => state?.auth);
+  const dispatch = useDispatch();
+  const { isLoggedIn, data } = useSelector((state) => state?.auth);
   const settings = [
     {
       name: 'Singup',
       slug: '/signup',
-      active: !authStatus
+      active: !isLoggedIn
     },
     {
-      name: 'Login',
-      slug: '/login',
-      active: !authStatus
+      name: 'Signin',
+      slug: '/signin',
+      active: !isLoggedIn
     },
     {
       name: 'My Profile',
-      slug: '/my-profile',
-      active: authStatus
+      slug: '/user/profile',
+      active: isLoggedIn
     },
     {
       name: 'My Courses',
       slug: '/my-courses',
-      active: authStatus
+      active: isLoggedIn
     },
     {
       name: 'Support',
       slug: '/support',
-      active: authStatus
+      active: isLoggedIn
     },
     {
       name: 'Logout',
       slug: '/logout',
-      active: authStatus
+      active: isLoggedIn
+    },
+    {
+      name: 'Create Course',
+      slug: '/course/create',
+      active: isLoggedIn
     }
   ];
   const navItems = [
@@ -103,17 +110,14 @@ function Header() {
       name: ' Courses',
       slug: '/courses'
     },
-    {
-      name: ' Blog',
-      slug: '/courses'
-    },
+
     {
       name: ' About Us',
-      slug: '/courses'
+      slug: '/about-us'
     },
     {
       name: ' Contact Us',
-      slug: '/courses'
+      slug: '/contact-us'
     }
   ];
   const navigate = useNavigate();
@@ -132,8 +136,15 @@ function Header() {
   };
 
   const handleCloseUserMenu = (event) => {
-    console.log('event', event);
     setAnchorElUser(null);
+  };
+
+  const logout = async () => {
+    const res = await dispatch(logoutUser());
+    console.log('res', res);
+    if (res.payload.message === 'jwt expired') {
+      await dispatch(refreshAccessToken());
+    }
   };
 
   return (
@@ -221,7 +232,14 @@ function Header() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar
+                    alt='Remy Sharp'
+                    src={
+                      data?.avatar?.secure_url
+                        ? data?.avatar?.secure_url
+                        : 'https://res.cloudinary.com/du9jzqlpt/image/upload/v1674647316/avatar_drzgxv.jpg'
+                    }
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -244,7 +262,13 @@ function Header() {
                   setting.active ? (
                     <MenuItem key={setting.slug} onClick={handleCloseUserMenu}>
                       <Typography textAlign='center'>
-                        <Link to={`${setting.slug}`}>{setting.name}</Link>
+                        {setting.slug === '/logout' ? (
+                          <button onClick={logout}>
+                            <Link>{setting.name}</Link>{' '}
+                          </button>
+                        ) : (
+                          <Link to={`${setting.slug}`}>{setting.name}</Link>
+                        )}
                       </Typography>
                     </MenuItem>
                   ) : null

@@ -21,6 +21,8 @@ import AddNewLecture from './pages/dashboard/AddLecture.jsx';
 import DisplayLectures from './pages/dashboard/DisplayLectures.jsx';
 import HomePage from './pages/HomePage.jsx';
 import Checkout from './pages/payment/Checkout.jsx';
+import CheckoutFailure from './pages/payment/CheckoutFailure.jsx';
+import CheckoutSuccess from './pages/payment/CheckoutSuccess.jsx';
 import SignIn from './pages/SignIn.jsx';
 import Signup from './pages/Signup.jsx';
 import Support from './pages/Support.jsx';
@@ -128,6 +130,14 @@ const router = createBrowserRouter([
       {
         path: '/course/add-lecture',
         element: <AddNewLecture />
+      },
+      {
+        path: '/checkout/success',
+        element: <CheckoutSuccess />
+      },
+      {
+        path: '/chekcout/failure',
+        element: <CheckoutFailure />
       }
     ]
   }

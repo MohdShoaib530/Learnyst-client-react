@@ -82,7 +82,7 @@ function AddNewLecture() {
     <div className='flex items-center justify-center h-[100vh]'>
       <form
         onSubmit={addLecture}
-        className='flex flex-col justify-center gap-5 rounded-lg p-4 text-white w-[700px] my-10 shadow-[0_0_10px_black] relative'
+        className='flex flex-col justify-center gap-5 rounded-lg p-4  w-[700px] my-10 shadow-[0_0_10px_black] relative'
       >
         <p
           onClick={() =>
@@ -101,11 +101,11 @@ function AddNewLecture() {
                 {lectureData.previewVideo ? (
                   <video
                     src={lectureData.previewVideo}
-                    className='w-60 h-60 m-auto border'
+                    className='w-60 h-60 m-auto border border-black rounded-sm'
                     controls
                   ></video>
                 ) : (
-                  <div className='w-full h-44 m-auto flex items-center justify-center border'>
+                  <div className='w-full h-44 m-auto flex items-center justify-center border border-black rounded-sm'>
                     <h1 className='font-bold text-lg'> upload video</h1>
                   </div>
                 )}
@@ -132,7 +132,7 @@ function AddNewLecture() {
                 name='title'
                 id='title'
                 placeholder='Enter course title'
-                className='bg-transparent px-2 py-1 border'
+                className='bg-transparent px-2 py-1 border border-black rounded-sm'
                 value={lectureData.title}
                 onChange={handleOnChange}
               />
@@ -147,7 +147,7 @@ function AddNewLecture() {
                 name='description'
                 id='description'
                 placeholder='Enter course description'
-                className=' bg-transparent px-2 py-1 h-24 overflow-y-scroll resize-none border'
+                className=' bg-transparent px-2 py-1 h-24 overflow-y-scroll resize-none border border-black rounded-sm'
                 value={lectureData.description}
                 onChange={handleOnChange}
               />

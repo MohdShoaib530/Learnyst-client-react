@@ -59,7 +59,7 @@ function DisplayLectures() {
             <div>
               <h1>
                 <span className='text-yellow-500'> Title: </span>
-                <span className='text-gray-200'>
+                <span className=''>
                   {lectures && lectures[currentVideo]?.title}
                 </span>
               </h1>
@@ -67,7 +67,7 @@ function DisplayLectures() {
                 <span className='text-yellow-500 line-clamp-4'>
                   Description:{' '}
                 </span>
-                <span className='text-gray-200'>
+                <span className=''>
                   {lectures && lectures[currentVideo]?.description}
                 </span>
               </p>

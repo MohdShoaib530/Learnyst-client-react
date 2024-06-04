@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ import { deleteCourseById } from '../../redux/slices/courseSlice';
 
 function CourseDetails() {
   const { state } = useLocation();
-  const { role, data } = useSelector((state) => state?.auth);
+  const { role, data, isLoggedIn } = useSelector((state) => state?.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,6 +19,14 @@ function CourseDetails() {
     }
     if (res.payload.success === true) {
       navigate('/courses');
+    }
+  }
+  function checkout() {
+    if (!isLoggedIn) {
+      toast.error('Please login to continue');
+      navigate('/signin');
+    } else {
+      navigate('/checkout');
     }
   }
   return (
@@ -56,10 +65,7 @@ function CourseDetails() {
                 Watch Lectures
               </button>
             ) : (
-              <button
-                onClick={() => navigate('/checkout')}
-                className='btn btn-secondary'
-              >
+              <button onClick={() => checkout()} className='btn btn-secondary'>
                 Checkout
               </button>
             )}

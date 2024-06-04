@@ -1,9 +1,10 @@
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { refreshAccessToken } from '../../redux/slices/authSlice.js';
 import {
   getRazorpayKey,
   getRazorpaySubsId,
@@ -11,33 +12,39 @@ import {
 } from '../../redux/slices/paymentSlice.js';
 
 function Checkout() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const paymentDetails = {
     razorpay_payment_id: '',
     razorpay_subscription_id: '',
     razorpay_signature: ''
   };
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const razorpayKey = useSelector((state) => state?.razorpay?.key);
+  const razorpayKey = useSelector((state) => state?.payment?.key);
   const subscription_id = useSelector(
-    (state) => state?.razorpay?.subscription_id
+    (state) => state?.payment?.subscription_id
   );
-  // const email = useSelector(state => state?.auth?.data?.email);
+  console.log('razorpayKeysss', razorpayKey, subscription_id);
+  const email = useSelector((state) => state?.auth?.data?.email);
 
   async function handleSubscription(e) {
     e.preventDefault();
+    console.log('razorpayKey', razorpayKey, subscription_id);
     if (!razorpayKey || !subscription_id) {
       toast.error('Something went wrong');
     }
     const options = {
       key: razorpayKey,
+      amount: '1',
+      currency: 'INR',
       subscription_id: subscription_id,
       name: 'codemon pvt. ltd.',
-      description: 'Subscription',
-      // prefill: {
-      //     email: email,
-      //     contact:" 9999999999",
-      // },
+      description: 'Test Transaction',
+      prefill: {
+        email: email,
+        contact: '9569668078'
+      },
       theme: {
         color: '#3399cc'
       },
@@ -50,17 +57,16 @@ function Checkout() {
           paymentDetails.razorpay_subscription_id =
             response.razorpay_subscription_id;
 
-          toast.success('payment successful');
-
           const res = await dispatch(paymentVerify(paymentDetails));
+          toast.success('payment successful');
 
           if (res?.payload?.success) {
             navigate('/checkout/success');
           } else {
-            navigate('/checkout/failure');
+            navigate('/chekcout/failure');
           }
         } catch (error) {
-          navigate('/checkout/failure');
+          navigate('/chekcout/failure');
         }
       }
     };
@@ -69,18 +75,23 @@ function Checkout() {
   }
 
   async function load() {
-    await dispatch(getRazorpayKey());
+    setLoading(true);
+    const res = await dispatch(refreshAccessToken());
+    console.log('res', res);
+    const key = await dispatch(getRazorpayKey());
+    console.log('key', key);
     await dispatch(getRazorpaySubsId());
+    setLoading(false);
   }
 
   useEffect(() => {
     load();
   }, []);
 
-  return (
+  return !loading ? (
     <form
       onSubmit={handleSubscription}
-      className='min-h-[90vh] flex items-center justify-center text-white '
+      className='min-h-[90vh] flex items-center justify-center '
     >
       <div className='w-80 h-[26rem] mt-16 flex flex-col justify-center shadow-[0_0_10px_black] rounded-lg relative'>
         <h1 className='bg-yellow-500 absolute top-0 w-full text-center py-4 text-2xl font-bold rounded-tl0lg rounded-tr-lg'>
@@ -100,7 +111,7 @@ function Checkout() {
             <CurrencyRupeeIcon />
             <span>499</span> only
           </p>
-          <div className='text-gray-200'>
+          <div className=''>
             <p>100% refund on cancellation</p>
             <p>* Terms and conditions applied *</p>
           </div>
@@ -113,6 +124,10 @@ function Checkout() {
         </div>
       </div>
     </form>
+  ) : (
+    <h1 className='flex items-center justify-center text-3xl h-screen'>
+      Loading Payment Details...
+    </h1>
   );
 }
 
